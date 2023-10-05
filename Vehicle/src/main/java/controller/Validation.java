@@ -18,6 +18,7 @@ public class Validation {
             System.out.print(msg);
             String str = sc.nextLine().trim().toLowerCase();
 
+
             if (status.equals(Status.UPDATE) && str.isBlank()) {
                 return str;
             }
@@ -105,6 +106,36 @@ public class Validation {
             }
         }
     }
+    public String checkID(String msg, Status status, List<Vehicle> list, List<Vehicle> listFromFile){
+        String ID;
+        while (true) {
+             ID = checkString(msg, status);
+            String pattern = "\\d{4}";
+            if(!ID.matches(pattern)){
+                System.out.println("Incorrect format! ID must have (XXXX) format with X is a digits");
+                continue;
+            }
+            boolean isUnique = true;
+            for (Vehicle v : list){
+                if (ID.equals(v.getId())){
+                    isUnique = false;
+                }
+            }
+
+            for(Vehicle v : listFromFile){
+                if (ID.equals(v.getId())){
+                    isUnique = false;
+                }
+            }
+
+            if (!isUnique){
+                System.out.println("ID already exists!");
+            }else{
+                break;
+            }
+        }
+        return ID;
+    }
 
     public boolean checkDuplicateId(String id, List<Vehicle> list) {
         if (list.isEmpty()) return false;
@@ -117,4 +148,6 @@ public class Validation {
             return false;
         }
     }
+
+
 }

@@ -19,9 +19,9 @@ import java.util.logging.Logger;
 public class VehicleManage {
 
     public List<Vehicle> listVehicle;
-    private static String RESET = "\u001B[0m";
-    private static String RED = "\u001B[31m";
-    private static String GREEN = "\u001B[32m";
+    private static final String RESET = "\u001B[0m";
+    private static final String RED = "\u001B[31m";
+    private static final String GREEN = "\u001B[32m";
     // List<Vehicle> list = new ArrayList<>(); tao danh sach
 
     Validation valid = new Validation();
@@ -32,17 +32,14 @@ public class VehicleManage {
 
     public Vehicle inputVehicle(Status status) {
         while (true) {
-            String id = valid.checkString("Enter vehicle id: ", status);
-            if (valid.checkDuplicateId(id, loadData())) {
-                return null;
-            }
+            String ID = valid.checkID("Enter vehicle ID: ", status, listVehicle, loadData());
             String name = valid.checkString("Enter vehicle name: ", status);
             String color = valid.checkString("Enter vehicle color: ", status);
             double price = valid.checkDouble("Enter vehicle price: ", 0, Double.MAX_VALUE, status);
             String brand = valid.checkString("Enter vehicle brand: ", status);
             String type = valid.checkString("Enter vehicle type: ", status);
             int productYear = valid.checkYear("Enter vehicle product year: ", status); // 2022
-            Vehicle newVehicle = new Vehicle(id, name, color, price, brand, type, productYear);
+            Vehicle newVehicle = new Vehicle(ID, name, color, price, brand, type, productYear);
             System.out.println(GREEN + "Successful added!" + RESET);
             return newVehicle;
         }
